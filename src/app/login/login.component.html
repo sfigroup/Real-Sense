@@ -1,0 +1,23 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="side" opened>
+    <mat-list>
+      <mat-list-item routerLink="/"> Home </mat-list-item>
+      <mat-list-item> Assets </mat-list-item>
+      <mat-list-item routerLink="/devices"> Devices </mat-list-item>
+      <mat-list-item> Entity views </mat-list-item>
+      <mat-list-item routerLink="/dashboards"> DashBoards </mat-list-item>
+     </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <p>login worksss!</p>
+    <button (click)="login()">Login</button>
+    <button (click)="getUser()">GetUser</button>
+
+    <button (click)="getDashBoards()">getDashBoards</button>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
