@@ -1,7 +1,8 @@
 import { IfStmt } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ThingsService } from '../services/things.service';
+import { environment } from 'src/environments/environment';
+import { ThingsService } from '../services/thingsboard/things.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +10,7 @@ import { ThingsService } from '../services/things.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit,AfterViewInit {
-
+  baseUrl = environment.baseUrl;
   dashboardUrl!: string;
   dashboardUrlSafe!: SafeResourceUrl;
 
@@ -50,7 +51,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
    this.thingsService.GetDashBoards()
    .subscribe(res =>
     {
-      this.dashboardUrl = `https://things.sfigroup.co.za/dashboard/${res.data[0].id.id}`;
+      this.dashboardUrl = `${this.baseUrl}/dashboard/${res.data[0].id.id}`;
       this.dashboardUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.dashboardUrl);
       console.log(this.dashboardUrl);
     });

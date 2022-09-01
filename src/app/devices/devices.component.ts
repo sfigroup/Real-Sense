@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Device, DeviceData } from '../services/models/device.model';
-import { ThingsService } from '../services/things.service';
+import { ThingsService } from '../services/thingsboard/things.service';
 
 @Component({
   selector: 'app-devices',
