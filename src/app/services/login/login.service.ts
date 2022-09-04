@@ -10,10 +10,10 @@ export class LoginService {
   baseUrl = environment.baseUrl;
   constructor(private httpClient: HttpClient) {}
 
-  public loginbasurl(): Observable<Tokens> {
+  public loginbasurl(email:string,password:string): Observable<Tokens> {
     var requestBody = {
-      username: 'jared@robotweb.co.za',
-      password: 'SfiJc001$$',
+      username: email,
+      password: password,
     };
     var httpOptions = {
       headers: new HttpHeaders({
@@ -30,15 +30,23 @@ export class LoginService {
           return throwError(() => new Error(`${err.error.message}`));
         })
       );
-    // .subscribe(
-    //   (data) => {
-    //     console.log(data);
-    //     document.cookie = 'token=' + data.token;
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   }
-    // );
+  }
+
+
+  private getCookie(name: string) {
+    let ca: Array<string> = document.cookie.split(';');
+    console.log(document.cookie);
+    let caLen: number = ca.length;
+    let cookieName = `${name}=`;
+    let c: string;
+
+    for (let i: number = 0; i < caLen; i += 1) {
+      c = ca[i].replace(/^\s+/g, '');
+      if (c.indexOf(cookieName) == 0) {
+        return c.substring(cookieName.length, c.length);
+      }
+    }
+    return '';
   }
 }
 
@@ -46,3 +54,13 @@ interface Tokens {
   token: string;
   refreshToken: string;
 }
+
+interface UserDetails {
+  customerId: CustomerId;
+}
+
+interface CustomerId {
+  entityType: string;
+  id: string;
+}
+
