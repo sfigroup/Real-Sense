@@ -22,6 +22,8 @@ import { CookieService } from './services/cookie/cookie.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import { IconRegistryService } from './services/iconregistry/icon-registry.service';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -45,9 +47,10 @@ import {MatIconModule} from '@angular/material/icon';
     ReactiveFormsModule,
     AngularSvgIconModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ],
-  providers: [ThingsService,LoginService,CookieService],
+  providers: [ThingsService,LoginService,CookieService,IconRegistryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

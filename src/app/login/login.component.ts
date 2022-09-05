@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl(''),
   });
   baseUrl = environment.baseUrl;
-  errorMessage!:string;
+  errorMessage!: string;
   loginUrlSafe!: SafeResourceUrl;
 
   constructor(
@@ -26,17 +26,21 @@ export class LoginComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private router: Router,
     private loginService: LoginService,
-    private cookieService:CookieService
+    private cookieService: CookieService
   ) {}
 
   ngOnInit(): void {}
 
   login(): void {
-    var email=this.form.controls['username'].value;
-    var password=this.form.controls['password'].value;
-    this.loginService.loginbasurl(email,password).subscribe({
+    var email = this.form.controls['username'].value;
+    var password = this.form.controls['password'].value;
+    this.loginService.loginbasurl(email, password).subscribe({
       next: (res) => {
-        this.cookieService.setCookie('token',res.token);
+        this.cookieService.decodeToken(res.token);
+        this.cookieService.setCookie('token', res.token);
+        //this.loginThingsBoardIframe(email, password);
+        this.thingsService.GetUser();
+        this.router.navigate(['home']);
         console.log(res);
       },
       error: (error) => {
@@ -46,18 +50,8 @@ export class LoginComponent implements OnInit {
         return;
       },
     });
-
-    //this.loginThingsBoardIframe(email,password);
-    this.thingsService.GetUser();
-    this.router.navigate(['home']);
   }
 
-  // submit() {
-  //   if (this.form.valid) {
-  //     this.submitEM.emit(this.form.value);
-  //   }
-
-  // }
   @Input() error!: string | null;
 
   @Output() submitEM = new EventEmitter();
@@ -66,22 +60,25 @@ export class LoginComponent implements OnInit {
     this.thingsService.GetUser();
   }
 
-  private loginThingsBoardIframe( email: string, password: string):void
-  {
-    this.loginUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(`${this.baseUrl}`);
-    var iframe= document.getElementById('tbiframe') as HTMLIFrameElement;
+  private loginThingsBoardIframe(email: string, password: string): void {
+    this.loginUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `${this.baseUrl}`
+    );
+    var iframe = document.getElementById('tbiframe') as HTMLIFrameElement;
     var iframedocument = iframe.contentDocument;
     //var iframewindowdocument = iframe.contentWindow?.document;
-    if(iframedocument !== null)
-    {
-        console.log("set from document");
-        var userName =iframedocument.getElementById('username-input') as HTMLInputElement;
-        var passWord = iframedocument?.getElementById('password-input') as HTMLInputElement;
-        userName.value = email;
-        passWord.value = password;
-        userName.dispatchEvent(new Event('input'));
-        passWord.dispatchEvent(new Event('input'));
-
+    if (iframedocument !== null) {
+      console.log('set from document');
+      var userName = iframedocument.getElementById(
+        'username-input'
+      ) as HTMLInputElement;
+      var passWord = iframedocument?.getElementById(
+        'password-input'
+      ) as HTMLInputElement;
+      userName.value = email;
+      passWord.value = password;
+      userName.dispatchEvent(new Event('input'));
+      passWord.dispatchEvent(new Event('input'));
     }
   }
 }

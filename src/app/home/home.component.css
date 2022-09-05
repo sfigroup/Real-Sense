@@ -17,5 +17,13 @@
 .toolbar-container
 {
   background-color: #286968;
+  height: 78px;
+}
+.logo-container
+{
+  margin-top: 10px;
+  margin-left: 10px;
+  align-content: center;
+  height:67.1px;
 }
 
