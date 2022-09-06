@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     {
       label:`Assets`,
       icon:`assets_icon`,
-      link:`home`
+      link:``
     },
     {
       label:`Devices`,
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     {
       label:`Entity Views`,
       icon:`entity_icon`,
-      link:`home`
+      link:``
     },
     {
       label:`Dashboards`,
