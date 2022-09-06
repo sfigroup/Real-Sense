@@ -5,6 +5,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ThingsService } from '../services/thingsboard/things.service';
 import { Router } from '@angular/router';
+import { LoginService } from '../services/login/login.service';
 
 @Component({
   selector: 'app-home',
@@ -44,8 +45,8 @@ export class HomeComponent implements OnInit {
   ];
   constructor(iconservice:IconRegistryService,
     private cookieService:CookieService,
-    private thingService:ThingsService,
-    private router: Router,) {
+    private router: Router,
+    private loginService:LoginService) {
 
    }
 
@@ -88,6 +89,7 @@ export class HomeComponent implements OnInit {
   logOut()
   {
     this.cookieService.clearAllCookie();
+    this.loginService.Authenticated=false;
     this.router.navigate(['login']);
     //https://things.sfigroup.co.za/api/auth/logout
   }

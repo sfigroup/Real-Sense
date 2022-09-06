@@ -4,6 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { CookieService } from '../services/cookie/cookie.service';
+import { IconRegistryService } from '../services/iconregistry/icon-registry.service';
 import { LoginService } from '../services/login/login.service';
 import { ThingsService } from '../services/thingsboard/things.service';
 
@@ -26,10 +27,16 @@ export class LoginComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private router: Router,
     private loginService: LoginService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private svgRegistry: IconRegistryService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(this.loginService.Authenticated)
+    {
+      this.router.navigate(['home']);
+    }
+  }
 
   login(): void {
     var email = this.form.controls['username'].value;
@@ -38,7 +45,8 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         this.cookieService.decodeToken(res.token);
         this.cookieService.setCookie('token', res.token);
-        //this.loginThingsBoardIframe(email, password);
+        this.loginThingsBoardIframe(email, password);
+        this.loginService.Authenticated=true;
         this.thingsService.GetUser();
         this.router.navigate(['home']);
         console.log(res);
@@ -47,14 +55,11 @@ export class LoginComponent implements OnInit {
         var x = error;
         console.log(error.message);
         this.errorMessage = error.message;
+        this.loginService.Authenticated=false;
         return;
-      },
+      }
     });
   }
-
-  @Input() error!: string | null;
-
-  @Output() submitEM = new EventEmitter();
 
   getUser(): void {
     this.thingsService.GetUser();

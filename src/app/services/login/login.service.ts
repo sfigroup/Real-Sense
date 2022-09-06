@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginService {
   baseUrl = environment.baseUrl;
+  Authenticated:boolean= false;
   constructor(private httpClient: HttpClient) {}
 
   public loginbasurl(email:string,password:string): Observable<Tokens> {
@@ -28,26 +29,11 @@ export class LoginService {
       .pipe(
         catchError((err) => {
           return throwError(() => new Error(`${err.error.message}`));
+          this.Authenticated = false;
         })
       );
   }
 
-
-  private getCookie(name: string) {
-    let ca: Array<string> = document.cookie.split(';');
-    console.log(document.cookie);
-    let caLen: number = ca.length;
-    let cookieName = `${name}=`;
-    let c: string;
-
-    for (let i: number = 0; i < caLen; i += 1) {
-      c = ca[i].replace(/^\s+/g, '');
-      if (c.indexOf(cookieName) == 0) {
-        return c.substring(cookieName.length, c.length);
-      }
-    }
-    return '';
-  }
 }
 
 interface Tokens {

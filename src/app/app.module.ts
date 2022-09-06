@@ -24,6 +24,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { IconRegistryService } from './services/iconregistry/icon-registry.service';
 import {MatMenuModule} from '@angular/material/menu';
+import { CanactivateRouteGaurdService } from './services/Guards/canactivate-route-gaurd.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatIconModule,
     MatMenuModule
   ],
-  providers: [ThingsService,LoginService,CookieService,IconRegistryService],
+  providers: [ThingsService,LoginService,CookieService,IconRegistryService,CanactivateRouteGaurdService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

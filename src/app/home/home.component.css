@@ -19,11 +19,12 @@
   background-color: #286968;
   height: 78px;
 }
-.logo-container
+.header-icon
 {
-  margin-top: 10px;
-  margin-left: 10px;
   align-content: center;
-  height:67.1px;
+  margin-top: 16px;
+  padding-left: 18px;
+  height: 70%;
+  width: 70%;
 }
 
