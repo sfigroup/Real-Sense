@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   ngAfterViewInit(): void {
       var iframe= document.getElementById('tbiframe') as HTMLIFrameElement;
       console.log('the frame viewinit: ' + iframe );
+      this.getDashBoards();
       // var iwindow = iframe?.contentDocument
       // if(iwindow !== null)
       // {

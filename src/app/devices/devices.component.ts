@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Device, DeviceData } from '../services/models/device.model';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Device } from '../services/models/device.model';
 import { ThingsService } from '../services/thingsboard/things.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { ThingsService } from '../services/thingsboard/things.service';
   templateUrl: './devices.component.html',
   styleUrls: ['./devices.component.css']
 })
-export class DevicesComponent implements OnInit {
+export class DevicesComponent implements OnInit,AfterViewInit {
 
   DeviceData! :Device[];
   displayedColumns: string[] = ['createdTime', 'name', 'device', 'label'];
@@ -15,6 +15,12 @@ export class DevicesComponent implements OnInit {
   constructor(private thingsService: ThingsService) { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.getDevices();
   }
 
   getDevices(): void

@@ -8,12 +8,13 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginService {
   baseUrl = environment.baseUrl;
+  Authenticated:boolean= false;
   constructor(private httpClient: HttpClient) {}
 
-  public loginbasurl(): Observable<Tokens> {
+  public loginbasurl(email:string,password:string): Observable<Tokens> {
     var requestBody = {
-      username: 'jared@robotweb.co.za',
-      password: 'SfiJc001$$',
+      username: email,
+      password: password,
     };
     var httpOptions = {
       headers: new HttpHeaders({
@@ -28,21 +29,24 @@ export class LoginService {
       .pipe(
         catchError((err) => {
           return throwError(() => new Error(`${err.error.message}`));
+          this.Authenticated = false;
         })
       );
-    // .subscribe(
-    //   (data) => {
-    //     console.log(data);
-    //     document.cookie = 'token=' + data.token;
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   }
-    // );
   }
+
 }
 
 interface Tokens {
   token: string;
   refreshToken: string;
 }
+
+interface UserDetails {
+  customerId: CustomerId;
+}
+
+interface CustomerId {
+  entityType: string;
+  id: string;
+}
+

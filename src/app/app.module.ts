@@ -18,6 +18,13 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CookieService } from './services/cookie/cookie.service';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import { IconRegistryService } from './services/iconregistry/icon-registry.service';
+import {MatMenuModule} from '@angular/material/menu';
+import { CanactivateRouteGaurdService } from './services/Guards/canactivate-route-gaurd.service';
 
 @NgModule({
   declarations: [
@@ -38,9 +45,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularSvgIconModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule
   ],
-  providers: [ThingsService,LoginService],
+  providers: [ThingsService,LoginService,CookieService,IconRegistryService,CanactivateRouteGaurdService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

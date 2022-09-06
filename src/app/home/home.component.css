@@ -6,3 +6,25 @@
   right: 0;
   background: #eee;
 }
+ svg
+ {
+  padding-right:10px;
+ }
+
+ .example-spacer {
+  flex: 1 1 auto;
+}
+.toolbar-container
+{
+  background-color: #286968;
+  height: 78px;
+}
+.header-icon
+{
+  align-content: center;
+  margin-top: 16px;
+  padding-left: 18px;
+  height: 70%;
+  width: 70%;
+}
+
