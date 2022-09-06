@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         this.cookieService.decodeToken(res.token);
         this.cookieService.setCookie('token', res.token);
-        this.loginThingsBoardIframe(email, password);
+        //this.loginThingsBoardIframe(email, password);
         this.loginService.Authenticated=true;
         this.thingsService.GetUser();
         this.router.navigate(['home']);
