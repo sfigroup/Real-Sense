@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { ThingsService } from '../services/thingsboard/things.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit ,AfterViewInit{
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit {
   baseUrl = environment.baseUrl;
   errorMessage!: string;
   loginUrlSafe!: SafeResourceUrl;
+  loginSucces: boolean = false;
+  private email! :string;
+  private password! :string;
 
   constructor(
     private thingsService: ThingsService,
@@ -36,16 +39,27 @@ export class LoginComponent implements OnInit {
     {
       this.router.navigate(['home']);
     }
+    this.bringUpIFrame();
+  }
+  ngAfterViewInit(): void {
+    // if(this.loginSucces)
+    // {
+    //   this.loginThingsBoardIframe(this.email, this.password); this.loginThingsBoardIframe(this.email, this.password);
+    // }
+   
   }
 
   login(): void {
     var email = this.form.controls['username'].value;
     var password = this.form.controls['password'].value;
+    this.loginThingsBoardIframe(email,password);
     this.loginService.loginbasurl(email, password).subscribe({
       next: (res) => {
         this.cookieService.decodeToken(res.token);
         this.cookieService.setCookie('token', res.token);
-        //this.loginThingsBoardIframe(email, password);
+        this.email= email;
+        this.password=password;
+        this.loginSucces= true;
         this.loginService.Authenticated=true;
         this.thingsService.GetUser();
         this.router.navigate(['home']);
@@ -64,14 +78,16 @@ export class LoginComponent implements OnInit {
   getUser(): void {
     this.thingsService.GetUser();
   }
+  public bringUpIFrame()
+  {
+    this.loginUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(`${this.baseUrl}`);
+  };
 
-  private loginThingsBoardIframe(email: string, password: string): void {
-    this.loginUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `${this.baseUrl}`
-    );
+  public loginThingsBoardIframe(email: string, password: string): void {
+    
     var iframe = document.getElementById('tbiframe') as HTMLIFrameElement;
     var iframedocument = iframe.contentDocument;
-    //var iframewindowdocument = iframe.contentWindow?.document;
+    var iframewindowdocument = iframe.contentWindow?.document;
     if (iframedocument !== null) {
       console.log('set from document');
       var userName = iframedocument.getElementById(
@@ -84,6 +100,8 @@ export class LoginComponent implements OnInit {
       passWord.value = password;
       userName.dispatchEvent(new Event('input'));
       passWord.dispatchEvent(new Event('input'));
+      var button = iframedocument.querySelectorAll('button[type=submit]')[0] as HTMLButtonElement;
+      button.click();
     }
   }
 }

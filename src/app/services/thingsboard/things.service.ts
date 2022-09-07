@@ -49,7 +49,7 @@ export class ThingsService {
       }),
     };
 
-    var baseUrl = `${this.baseUrl}/api/customer/${customerId}/dashboards?pageSize=1&page=1`;
+    var baseUrl = `${this.baseUrl}/api/customer/${customerId}/dashboards?pageSize=10&page=0`;
     return this.httpClient.get<DashBoardDetails>(baseUrl, httpOptions);
   }
   // .subscribe(res =>

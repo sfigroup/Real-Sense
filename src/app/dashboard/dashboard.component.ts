@@ -9,10 +9,13 @@ import { ThingsService } from '../services/thingsboard/things.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
 export class DashboardComponent implements OnInit,AfterViewInit {
   baseUrl = environment.baseUrl;
   dashboardUrl!: string;
   dashboardUrlSafe!: SafeResourceUrl;
+  NoDashError! :string ;
+
 
   constructor(private thingsService : ThingsService, public sanitizer: DomSanitizer) { }
 
@@ -52,6 +55,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
    this.thingsService.GetDashBoards()
    .subscribe(res =>
     {
+      if(res.data.length < 1)
+      {
+        this.NoDashError = "No DashBoards Available";
+        return;
+      }
       this.dashboardUrl = `${this.baseUrl}/dashboard/${res.data[0].id.id}`;
       this.dashboardUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.dashboardUrl);
       console.log(this.dashboardUrl);

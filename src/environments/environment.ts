@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl:"https://things.sfigroup.co.za"
+  baseUrl:"http://iot.robotweb.co.za"
+  //baseUrl:"https://things.sfigroup.co.za"
 };
 
 /*
