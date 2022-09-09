@@ -30,7 +30,7 @@
     }
   },
   "workspaceLayout": {
-    "appsDir": "projects",
-    "libsDir": "projects"
+    "appsDir": "app",
+    "libsDir": "libs"
   }
 }

@@ -90,6 +90,7 @@ export class HomeComponent implements OnInit {
   {
     this.cookieService.clearAllCookie();
     this.loginService.Authenticated=false;
+    localStorage.clear();
     this.router.navigate(['login']);
     //https://things.sfigroup.co.za/api/auth/logout
   }

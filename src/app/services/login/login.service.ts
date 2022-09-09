@@ -34,6 +34,20 @@ export class LoginService {
       );
   }
 
+  // public logOut():void
+  // {
+  //   var httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //     }),
+  //   };
+  //   var baseLoginUrl = `${this.baseUrl}/api/auth/logout`;
+  //    this.httpClient.post(baseLoginUrl,{},httpOptions);
+  //    this.httpClient.post("http://iot.robotweb.co.za/api/noauth/oauth2Clients?platform=WEB",{},httpOptions);
+  //    //http://iot.robotweb.co.za/api/noauth/oauth2Clients?platform=WEB
+  // }
+
 }
 
 interface Tokens {

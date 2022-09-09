@@ -25,15 +25,17 @@ import {MatIconModule} from '@angular/material/icon';
 import { IconRegistryService } from './services/iconregistry/icon-registry.service';
 import {MatMenuModule} from '@angular/material/menu';
 import { CanactivateRouteGaurdService } from './services/Guards/canactivate-route-gaurd.service';
+import { DeviceDetailsComponent } from './device-details/device-details.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     LoginComponent,
     DashboardComponent,
     DevicesComponent,
-    HomeComponent
-  ],
+    HomeComponent,
+      DeviceDetailsComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
