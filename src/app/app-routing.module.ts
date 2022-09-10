@@ -8,16 +8,11 @@ import { CanactivateRouteGaurdService } from './services/Guards/canactivate-rout
 
 const routes: Routes = [
   {
-    path: '',
-    component: LoginComponent,
-
-  },
-  {
     path: 'login',
     component: LoginComponent,
   },
   {
-    path: 'home',
+    path: '',
     component: HomeComponent,
     canActivate:[CanactivateRouteGaurdService],
     children: [

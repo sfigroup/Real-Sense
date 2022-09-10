@@ -26,15 +26,16 @@ import { IconRegistryService } from './services/iconregistry/icon-registry.servi
 import {MatMenuModule} from '@angular/material/menu';
 import { CanactivateRouteGaurdService } from './services/Guards/canactivate-route-gaurd.service';
 import { DeviceDetailsComponent } from './device-details/device-details.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
     DevicesComponent,
     HomeComponent,
-      DeviceDetailsComponent
+    DeviceDetailsComponent
    ],
   imports: [
     BrowserModule,
@@ -51,7 +52,8 @@ import { DeviceDetailsComponent } from './device-details/device-details.componen
     AngularSvgIconModule,
     MatToolbarModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatPaginatorModule
   ],
   providers: [ThingsService,LoginService,CookieService,IconRegistryService,CanactivateRouteGaurdService],
   bootstrap: [AppComponent]

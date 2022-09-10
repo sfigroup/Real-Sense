@@ -1,6 +1,6 @@
 import { CookieService } from './../services/cookie/cookie.service';
 import { IconRegistryService } from './../services/iconregistry/icon-registry.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ThingsService } from '../services/thingsboard/things.service';
@@ -46,7 +46,8 @@ export class HomeComponent implements OnInit {
   constructor(iconservice:IconRegistryService,
     private cookieService:CookieService,
     private router: Router,
-    private loginService:LoginService) {
+    private loginService:LoginService,
+    private cd: ChangeDetectorRef) {
 
    }
 
@@ -63,11 +64,16 @@ export class HomeComponent implements OnInit {
     if(firstName.length ===0 && lastName.length ===0)
     {
       this.UserName='Unkown';
+      this.cd.detectChanges();
     }else
     {
       this.UserName= `${firstName} ${lastName}`;
+      this.cd.detectChanges();
     }
+
+    console.log('STORAGE:' + localStorage.getItem("jwt_token"));
   }
+
   breadCrumbMain() {
     this.appitemsTravel = this.menuitems;
     this.menuHeader  = [];
@@ -90,6 +96,7 @@ export class HomeComponent implements OnInit {
   {
     this.cookieService.clearAllCookie();
     this.loginService.Authenticated=false;
+
     localStorage.clear();
     this.router.navigate(['login']);
     //https://things.sfigroup.co.za/api/auth/logout

@@ -1,6 +1,9 @@
 export interface DeviceData
 {
   data:Device[];
+  hasNext:boolean;
+  totalElements:number;
+  totalPages:number;
 }
 
 export interface Device {

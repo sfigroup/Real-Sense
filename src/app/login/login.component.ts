@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -21,7 +21,8 @@ export class LoginComponent implements OnInit ,AfterViewInit{
   baseUrl = environment.baseUrl;
   errorMessage!: string;
   loginUrlSafe!: SafeResourceUrl;
-  loginSucces: boolean = false;
+  loginSucces = false;
+  iframeLoaded =false;
   private email! :string;
   private password! :string;
 
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     private router: Router,
     private loginService: LoginService,
     private cookieService: CookieService,
-    private svgRegistry: IconRegistryService
+    private svgRegistry: IconRegistryService,
+    private cd :ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -40,18 +42,17 @@ export class LoginComponent implements OnInit ,AfterViewInit{
       this.router.navigate(['home']);
     }
     this.bringUpIFrame();
+
   }
   ngAfterViewInit(): void {
-    // if(this.loginSucces)
-    // {
-    //   this.loginThingsBoardIframe(this.email, this.password); this.loginThingsBoardIframe(this.email, this.password);
-    // }
-   
+    this.checkIframeLoad();
+
   }
 
   login(): void {
     var email = this.form.controls['username'].value;
     var password = this.form.controls['password'].value;
+    // do error check here for when they return null values
     this.loginThingsBoardIframe(email,password);
     this.loginService.loginbasurl(email, password).subscribe({
       next: (res) => {
@@ -62,7 +63,7 @@ export class LoginComponent implements OnInit ,AfterViewInit{
         this.loginSucces= true;
         this.loginService.Authenticated=true;
         this.thingsService.GetUser();
-        this.router.navigate(['home']);
+        this.router.navigate(['']);
         console.log(res);
       },
       error: (error) => {
@@ -84,10 +85,10 @@ export class LoginComponent implements OnInit ,AfterViewInit{
   };
 
   public loginThingsBoardIframe(email: string, password: string): void {
-    
+
     var iframe = document.getElementById('tbiframe') as HTMLIFrameElement;
     var iframedocument = iframe.contentDocument;
-    var iframewindowdocument = iframe.contentWindow?.document;
+    //var iframewindowdocument = iframe.contentWindow?.document;
     if (iframedocument !== null) {
       console.log('set from document');
       var userName = iframedocument.getElementById(
@@ -103,5 +104,18 @@ export class LoginComponent implements OnInit ,AfterViewInit{
       var button = iframedocument.querySelectorAll('button[type=submit]')[0] as HTMLButtonElement;
       button.click();
     }
+  }
+
+  public checkIframeLoad():void
+  {
+    var iframe = document.getElementById('tbiframe') as HTMLIFrameElement;
+    var iframedocument = iframe.contentDocument;
+    if(iframedocument?.readyState === 'complete')
+    {
+      this.iframeLoaded = true;
+      this.cd.detectChanges();
+      return
+    }
+    window.setTimeout(this.checkIframeLoad,100);
   }
 }

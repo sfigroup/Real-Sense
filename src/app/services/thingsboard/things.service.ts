@@ -26,8 +26,7 @@ export class ThingsService {
     });
   }
 
-  public GetDevicesForCustomer(): Observable<DeviceData> {
-    var page = 0;
+  public GetDevicesForCustomer(pageIndex:number,pageSize:number): Observable<DeviceData> {
     var token = this.cookieService.getCookie('token');
     var customerId = this.cookieService.getCookie('customerId');
     var httpOptions = {
@@ -35,7 +34,7 @@ export class ThingsService {
         'X-Authorization': 'Bearer ' + token,
       }),
     };
-    var baseUrl = `${this.baseUrl}/api/customer/${customerId}/devices?pageSize=10&page=${page}`;
+    var baseUrl = `${this.baseUrl}/api/customer/${customerId}/devices?pageSize=${pageSize}&page=${pageIndex}`;
 
     return this.httpClient.get<DeviceData>(baseUrl, httpOptions);
   }
