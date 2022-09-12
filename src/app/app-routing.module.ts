@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate:[CanactivateRouteGaurdService],
+    //canActivate:[CanactivateRouteGaurdService],
     children: [
       { path: 'dashboards', component: DashboardComponent },
       { path: 'devices', component: DevicesComponent },

@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { AuthServiceService } from '../services/Authentication/auth-service.service';
 import { CookieService } from '../services/cookie/cookie.service';
 import { IconRegistryService } from '../services/iconregistry/icon-registry.service';
 import { LoginService } from '../services/login/login.service';
@@ -33,7 +34,8 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     private loginService: LoginService,
     private cookieService: CookieService,
     private svgRegistry: IconRegistryService,
-    private cd :ChangeDetectorRef
+    private cd :ChangeDetectorRef,
+    private authService: AuthServiceService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +55,7 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     var email = this.form.controls['username'].value;
     var password = this.form.controls['password'].value;
     // do error check here for when they return null values
+    this.authService.login(email,password);
     this.loginThingsBoardIframe(email,password);
     this.loginService.loginbasurl(email, password).subscribe({
       next: (res) => {
