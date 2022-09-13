@@ -13,7 +13,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { HomeComponent } from './home/home.component';
-import { LoginService } from './services/login/login.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -56,7 +55,7 @@ import { AuthServiceService } from './services/Authentication/auth-service.servi
     MatMenuModule,
     MatPaginatorModule
   ],
-  providers: [ThingsService, LoginService, CookieService, IconRegistryService, CanactivateRouteGaurdService, AuthServiceService],
+  providers: [ThingsService, CookieService, IconRegistryService, CanactivateRouteGaurdService, AuthServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError, tap } from 'rxjs';
-import * as moment from "moment";
 import jwt_decode from "jwt-decode";
 import { environment } from 'src/environments/environment';
+import isBefore from 'date-fns/isBefore';
 
 @Injectable({
   providedIn: 'root'
@@ -29,17 +29,23 @@ export class AuthServiceService {
     return this.http.post<Tokens>(baseLoginUrl, requestBody,httpOptions)
       .pipe(
         tap(res => {
-          console.log('in tap');
           this.setSession(res);
-        })).subscribe();
+        }),
+        catchError((err) => {
+          return throwError(() => new Error(`${err.error.message}`));
+
+        }));
+
 
   }
 
   private setSession(authResult :Tokens) {
     var decoded =this.DecodeToken(authResult.token);
-
     localStorage.setItem('id_token', authResult.token);
     localStorage.setItem("expires_at", JSON.stringify(decoded.exp));
+    localStorage.setItem("customerId", decoded.customerId ? decoded.customerId:'');
+    localStorage.setItem("firstName", decoded.firstName ? decoded.firstName:'');
+    localStorage.setItem("lastName", decoded.lastName ? decoded.lastName: '');
   }
 
   logout() {
@@ -47,8 +53,9 @@ export class AuthServiceService {
     localStorage.removeItem("expires_at");
   }
 
-  public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+  public isLoggedIn() : boolean {
+    return isBefore(Math.floor(Date.now() / 1000),this.getExpiration());
+
   }
 
   isLoggedOut() {
@@ -57,8 +64,8 @@ export class AuthServiceService {
 
   getExpiration() {
     const expiration = localStorage.getItem("expires_at");
-    const expiresAt = JSON.parse(expiration? expiration: '');
-    return moment(expiresAt);
+    const expiresAt =  expiration ? JSON.parse(expiration):0;
+    return expiresAt;
   }
 
    DecodeToken(token: string): JwtT {
@@ -91,4 +98,6 @@ export interface JwtT {
   customerId?:string;
   tenantId?:string;
   userId?:string;
+  firstName?: string;
+  lastName?: string;
 }

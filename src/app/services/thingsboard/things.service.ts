@@ -14,7 +14,7 @@ export class ThingsService {
 
   public GetUser(): void {
     var baseUrl = `${this.baseUrl}/api/auth/user`;
-    var token = this.cookieService.getCookie('token');
+    var token = localStorage.getItem("id_token");
     var httpOptions = {
       headers: new HttpHeaders({
         'X-Authorization': 'Bearer ' + token,
@@ -22,13 +22,13 @@ export class ThingsService {
     };
 
     this.httpClient.get<UserDetails>(baseUrl, httpOptions).subscribe((data) => {
-      this.cookieService.setCookie('customerId',data.customerId.id);
+      localStorage.setItem('customerId',data.customerId.id);
     });
   }
 
   public GetDevicesForCustomer(pageIndex:number,pageSize:number): Observable<DeviceData> {
-    var token = this.cookieService.getCookie('token');
-    var customerId = this.cookieService.getCookie('customerId');
+    var token = localStorage.getItem("id_token");
+    var customerId = localStorage.getItem('customerId');
     var httpOptions = {
       headers: new HttpHeaders({
         'X-Authorization': 'Bearer ' + token,
@@ -40,8 +40,8 @@ export class ThingsService {
   }
 
   public GetDashBoards(): Observable<DashBoardDetails> {
-    var token = this.cookieService.getCookie('token');
-    var customerId = this.cookieService.getCookie('customerId');
+    var token = localStorage.getItem("id_token");
+    var customerId = localStorage.getItem('customerId');
     var httpOptions = {
       headers: new HttpHeaders({
         'X-Authorization': 'Bearer ' + token,

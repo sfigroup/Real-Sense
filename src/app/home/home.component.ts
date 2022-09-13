@@ -5,7 +5,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ThingsService } from '../services/thingsboard/things.service';
 import { Router } from '@angular/router';
-import { LoginService } from '../services/login/login.service';
+
 
 @Component({
   selector: 'app-home',
@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
   constructor(iconservice:IconRegistryService,
     private cookieService:CookieService,
     private router: Router,
-    private loginService:LoginService,
     private cd: ChangeDetectorRef) {
 
    }
@@ -59,9 +58,9 @@ export class HomeComponent implements OnInit {
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    var firstName=this.cookieService.getCookie('firstName');
-    var lastName=this.cookieService.getCookie('lastName');
-    if(firstName.length ===0 && lastName.length ===0)
+    var firstName=localStorage.getItem('firstName');
+    var lastName=localStorage.getItem('lastName');
+    if(firstName?.length ===0 && lastName?.length ===0)
     {
       this.UserName='Unkown';
       this.cd.detectChanges();
@@ -95,8 +94,6 @@ export class HomeComponent implements OnInit {
   logOut()
   {
     this.cookieService.clearAllCookie();
-    this.loginService.Authenticated=false;
-
     localStorage.clear();
     this.router.navigate(['login']);
     //https://things.sfigroup.co.za/api/auth/logout

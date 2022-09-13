@@ -6,7 +6,6 @@ import { environment } from 'src/environments/environment';
 import { AuthServiceService } from '../services/Authentication/auth-service.service';
 import { CookieService } from '../services/cookie/cookie.service';
 import { IconRegistryService } from '../services/iconregistry/icon-registry.service';
-import { LoginService } from '../services/login/login.service';
 import { ThingsService } from '../services/thingsboard/things.service';
 
 @Component({
@@ -31,7 +30,6 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     private thingsService: ThingsService,
     public sanitizer: DomSanitizer,
     private router: Router,
-    private loginService: LoginService,
     private cookieService: CookieService,
     private svgRegistry: IconRegistryService,
     private cd :ChangeDetectorRef,
@@ -39,16 +37,17 @@ export class LoginComponent implements OnInit ,AfterViewInit{
   ) {}
 
   ngOnInit(): void {
-    if(this.loginService.Authenticated)
+
+    if(this.authService.isLoggedIn())
     {
-      this.router.navigate(['home']);
+      this.router.navigate(['']);
+      return;
     }
     this.bringUpIFrame();
-
   }
+
   ngAfterViewInit(): void {
     this.checkIframeLoad();
-
   }
 
   login(): void {
@@ -57,14 +56,11 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     // do error check here for when they return null values
     this.authService.login(email,password);
     this.loginThingsBoardIframe(email,password);
-    this.loginService.loginbasurl(email, password).subscribe({
+    this.authService.login(email, password).subscribe({
       next: (res) => {
-        this.cookieService.decodeToken(res.token);
-        this.cookieService.setCookie('token', res.token);
         this.email= email;
         this.password=password;
         this.loginSucces= true;
-        this.loginService.Authenticated=true;
         this.thingsService.GetUser();
         this.router.navigate(['']);
         console.log(res);
@@ -73,7 +69,6 @@ export class LoginComponent implements OnInit ,AfterViewInit{
         var x = error;
         console.log(error.message);
         this.errorMessage = error.message;
-        this.loginService.Authenticated=false;
         return;
       }
     });
