@@ -16,10 +16,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar class="toolbar-container">
-      <span *ngFor="let m of menuHeader; let indx = index" style="color: white;">
-        <a  mat-button (click)="breadCrumb(m, indx)" ><mat-icon fxFlex="10">{{m.icon}}</mat-icon>{{m.label}}
-          </a>
-      </span>
+      <p>CRUMBY: <app-BreadcrumbComponent></app-BreadcrumbComponent></p>
       <span class="example-spacer"></span>
       <button mat-button class="button" aria-label="Example icon-button with share icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="39.007" height="47.242" viewBox="0 0 39.007 47.242">

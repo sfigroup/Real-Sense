@@ -26,16 +26,18 @@ import { CanactivateRouteGaurdService } from './services/Guards/canactivate-rout
 import { DeviceDetailsComponent } from './device-details/device-details.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthServiceService } from './services/Authentication/auth-service.service';
+import { BreadcrumbComponentComponent } from './BreadcrumbComponent/BreadcrumbComponent.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     LoginComponent,
     DashboardComponent,
     DevicesComponent,
     HomeComponent,
-    DeviceDetailsComponent
-  ],
+    DeviceDetailsComponent,
+      BreadcrumbComponentComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

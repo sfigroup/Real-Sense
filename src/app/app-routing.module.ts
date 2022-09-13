@@ -10,14 +10,16 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    data: { breadcrumb: 'Login' }
   },
   {
     path: '',
     component: HomeComponent,
     canActivate:[CanactivateRouteGaurdService],
+    data: { breadcrumb: 'Home' },
     children: [
-      { path: 'dashboards', component: DashboardComponent },
-      { path: 'devices', component: DevicesComponent },
+      { path: 'dashboards', component: DashboardComponent ,data: { breadcrumb: 'DashBoards' }},
+      { path: 'devices', component: DevicesComponent,data: { breadcrumb: 'Devices' } },
     ],
   },
 ];
