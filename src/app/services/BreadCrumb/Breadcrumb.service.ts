@@ -38,7 +38,8 @@ export class BreadcrumbService {
       if (route.data['breadcrumb']) {
         const breadcrumb = {
           label: this.getLabel(route.data),
-          url: '/' + routeUrl.join('/')
+          url: '/' + routeUrl.join('/'),
+          icon: this.getIcon(route.data)
         };
         breadcrumbs.push(breadcrumb);
       }
@@ -55,6 +56,11 @@ export class BreadcrumbService {
   private getLabel(data: Data) {
     // The breadcrumb can be defined as a static string or as a function to construct the breadcrumb element out of the route data
     return typeof data['breadcrumb'] === 'function' ? data['breadcrumb'](data) : data['breadcrumb'];
+  }
+
+  private getIcon(data:Data)
+  {
+    return typeof data['icon'] === 'function' ? data['icon'](data) : data['icon'];
   }
 
 }

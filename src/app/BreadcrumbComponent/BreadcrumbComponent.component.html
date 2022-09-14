@@ -1,5 +1,8 @@
-<ul>
-  <li *ngFor="let breadcrumb of (breadcrumbs$ | async)">
-    <a [href]="breadcrumb.url">{{ breadcrumb.label }}</a>
-  </li>
-</ul>
+<span *ngFor="let breadcrumb of(breadcrumbs$ | async)" style="color: white;">
+  <a  mat-button class="button" [routerLink]="breadcrumb.url" >
+    <mat-icon fxFlex="1">
+      {{breadcrumb.icon}}
+    </mat-icon>
+    {{breadcrumb.label}}
+  </a>
+</span>

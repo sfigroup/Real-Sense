@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Device, DeviceData } from '../models/device.model';
+import { DeviceData } from '../models/device.model';
 import { environment } from 'src/environments/environment';
-import { CookieService } from '../cookie/cookie.service';
+import { DashboardData } from 'src/app/model/dashboardData';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThingsService {
   baseUrl = environment.baseUrl;
-  constructor(private httpClient: HttpClient,private cookieService:CookieService) {}
+  constructor(private httpClient: HttpClient) {}
 
   public GetUser(): void {
     var baseUrl = `${this.baseUrl}/api/auth/user`;
@@ -39,7 +39,7 @@ export class ThingsService {
     return this.httpClient.get<DeviceData>(baseUrl, httpOptions);
   }
 
-  public GetDashBoards(): Observable<DashBoardDetails> {
+  public GetDashBoards(pageIndex:number,pageSize:number): Observable<DashboardData> {
     var token = localStorage.getItem("id_token");
     var customerId = localStorage.getItem('customerId');
     var httpOptions = {
@@ -48,8 +48,8 @@ export class ThingsService {
       }),
     };
 
-    var baseUrl = `${this.baseUrl}/api/customer/${customerId}/dashboards?pageSize=10&page=0`;
-    return this.httpClient.get<DashBoardDetails>(baseUrl, httpOptions);
+    var baseUrl = `${this.baseUrl}/api/customer/${customerId}/dashboards?pageSize=${pageSize}&page=${pageIndex}`;
+    return this.httpClient.get<DashboardData>(baseUrl, httpOptions);
   }
   // .subscribe(res =>
   //   {
@@ -70,17 +70,4 @@ interface UserDetails {
 interface CustomerId {
   entityType: string;
   id: string;
-}
-
-interface DashBoardDetails {
-  data: Array<DashboardID>;
-}
-
-interface DashboardID {
-  id: specificDashBoardId;
-}
-
-interface specificDashBoardId {
-  id: string;
-  entityType: string;
 }
