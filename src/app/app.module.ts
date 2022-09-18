@@ -27,17 +27,19 @@ import { DeviceDetailsComponent } from './device-details/device-details.componen
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthServiceService } from './services/Authentication/auth-service.service';
 import { BreadcrumbComponentComponent } from './BreadcrumbComponent/BreadcrumbComponent.component';
+import { DashboardDisplayComponent } from './dashboard-display/dashboard-display.component';
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
     DevicesComponent,
     HomeComponent,
     DeviceDetailsComponent,
-      BreadcrumbComponentComponent
-   ],
+    BreadcrumbComponentComponent,
+    DashboardDisplayComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

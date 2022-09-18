@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { DashboardData, ListOfDashBoards } from '../model/dashboardData';
+import {  ListOfDashBoards } from '../model/dashboardData';
 import { ThingsService } from '../services/thingsboard/things.service';
 
 @Component({
@@ -22,20 +22,19 @@ export class DashboardComponent implements OnInit,AfterViewInit {
     // MatPaginator Output
   pageEvent!: PageEvent;
   listOfDashBoards!: ListOfDashBoards[];
-  displayedColumns: string[] = ['name', 'id', 'label'];
+  displayedColumns: string[] = ['name', 'id', 'label','actions'];
   //table and paginator end
-
-  baseUrl = environment.baseUrl;
-
-  dashboardUrl!: string;
-  dashboardUrlSafe!: SafeResourceUrl;
   NoDashError! :string ;
 
+  displayDash : boolean = false;
+  selectedDashId : string= ''
 
-
-  constructor(private thingsService : ThingsService, public sanitizer: DomSanitizer) { }
+  constructor(private thingsService : ThingsService,
+    public sanitizer: DomSanitizer,
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.displayDash=false;
 
   }
   ngAfterContentChecked(): void {
@@ -68,6 +67,11 @@ export class DashboardComponent implements OnInit,AfterViewInit {
       ).subscribe();
   }
 
+  displayDashboard(dashId:string)
+  {
+    this.displayDash =true;
+    this.selectedDashId= dashId;
+  }
   listDashboards(): void
   {
     this.thingsService.GetDashBoards(this.Paginator?.pageIndex ?? 0,

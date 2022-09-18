@@ -1,0 +1,9 @@
+iframe.tb-default mat-fab-toolbar.mat-primary .mat-fab-toolbar-background
+{
+  background-color: blueviolet;
+}
+
+::ng-deep mat-fab-toolbar
+{
+  background-color: blueviolet;
+}
