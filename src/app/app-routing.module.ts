@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DevicesComponent } from './devices/devices.component';
 import { HomeComponent } from './home/home.component';
 import { CanactivateRouteGaurdService } from './services/Guards/canactivate-route-gaurd.service';
+import { DashboardDisplayComponent } from './dashboard-display/dashboard-display.component';
 
 const routes: Routes = [
   {
@@ -15,11 +16,20 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate:[CanactivateRouteGaurdService],
-    data: { breadcrumb: 'Home',icon:'home_icon'},
+    canActivate: [CanactivateRouteGaurdService],
+    data: { breadcrumb: 'Home', icon: 'home_icon' },
     children: [
-      { path: 'dashboards', component: DashboardComponent ,data: { breadcrumb: 'DashBoards',icon:'dashboard_icon'}},
-      { path: 'devices', component: DevicesComponent,data: { breadcrumb: 'Devices',icon:'devices_icon'}},
+      {
+        path: 'dashboards',
+        component: DashboardComponent,
+        data: { breadcrumb: 'DashBoards', icon: 'dashboard_icon' }
+      },
+      {
+      path:'dashboarddisplay',
+      component: DashboardDisplayComponent,
+      data: { breadcrumb: 'DashBoadDisplay', icon: 'dashboard_icon' }
+      },
+      { path: 'devices', component: DevicesComponent, data: { breadcrumb: 'Devices', icon: 'devices_icon' } },
     ],
   },
 ];
@@ -28,4 +38,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

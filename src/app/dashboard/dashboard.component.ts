@@ -12,7 +12,7 @@ import { ThingsService } from '../services/thingsboard/things.service';
   styleUrls: ['./dashboard.component.css']
 })
 
-export class DashboardComponent implements OnInit,AfterViewInit {
+export class DashboardComponent implements OnInit,AfterViewInit{
   //table and paginator start
   @ViewChild(MatPaginator)
   Paginator!:MatPaginator;
@@ -35,7 +35,6 @@ export class DashboardComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
     this.displayDash=false;
-
   }
   ngAfterContentChecked(): void {
     //Called after every check of the component's or directive's content.
@@ -71,7 +70,9 @@ export class DashboardComponent implements OnInit,AfterViewInit {
   {
     this.displayDash =true;
     this.selectedDashId= dashId;
+    this.router.navigate(['dashboarddisplay'],{state:{dashboardid:dashId}});
   }
+
   listDashboards(): void
   {
     this.thingsService.GetDashBoards(this.Paginator?.pageIndex ?? 0,

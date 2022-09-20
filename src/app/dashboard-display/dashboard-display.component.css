@@ -1,9 +1,5 @@
-iframe.tb-default mat-fab-toolbar.mat-primary .mat-fab-toolbar-background
+.tb-default.mat-toolbar.mat-primary
 {
-  background-color: blueviolet;
-}
-
-::ng-deep mat-fab-toolbar
-{
-  background-color: blueviolet;
+  background: green !important;
+  color:brown !important;
 }

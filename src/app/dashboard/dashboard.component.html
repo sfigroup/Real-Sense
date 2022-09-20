@@ -43,10 +43,10 @@
                  aria-label="Select page" class="mat-elevation-z8">
         </mat-paginator>
       </mat-card-content>
-      <mat-card-content  *ngIf="displayDash">
-        <app-dashboard-display [DashboardId] ="selectedDashId"></app-dashboard-display>
-      </mat-card-content >
-    </mat-card>
+
+        <router-outlet></router-outlet>
+
+      </mat-card>
 
   </div>
 <!-- <iframe id="tbiframe" width="100%" height="800px" frameBorder="0" [src]="dashboardUrlSafe"></iframe> -->
