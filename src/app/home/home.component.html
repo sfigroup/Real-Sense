@@ -7,7 +7,7 @@
       <mat-divider></mat-divider>
       <mat-list role="list" *ngFor="let menu of appitemsTravel">
         <mat-list-item routerLink="{{menu.link}}" (click)="menuChange(menu)" role="listitem">
-          <mat-icon svgIcon="{{menu.icon}}"></mat-icon>
+          <mat-icon class="sidenav-icon" svgIcon="{{menu.icon}}"></mat-icon>
           <span fxFlex="90">{{menu.label}}</span>
         </mat-list-item>
         <mat-divider></mat-divider>

@@ -2,3 +2,10 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.tb-default mat-fab-toolbar.mat-primary .mat-fab-toolbar-background
+{
+  background: green !important;
+  color:brown !important;
+}
+

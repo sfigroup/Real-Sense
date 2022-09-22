@@ -22,21 +22,21 @@ export class HomeComponent implements OnInit {
       icon:`home_icon`,
       link:``
     },
-    {
-      label:`Assets`,
-      icon:`assets_icon`,
-      link:``
-    },
+    // {
+    //   label:`Assets`,
+    //   icon:`assets_icon`,
+    //   link:``
+    // },
     {
       label:`Devices`,
       icon:`devices_icon`,
       link:`devices`
     },
-    {
-      label:`Entity Views`,
-      icon:`entity_icon`,
-      link:``
-    },
+    // {
+    //   label:`Entity Views`,
+    //   icon:`entity_icon`,
+    //   link:``
+    // },
     {
       label:`Dashboards`,
       icon:`dashboard_icon`,

@@ -19,12 +19,32 @@
   background-color: #286968;
   height: 78px;
 }
+
+.sidenav-icon
+{
+  height: 43px;
+  width:35px;
+  padding-right: 10px;
+
+
+}
+
+.mat-list-base .mat-list-item {
+  color: #286968;
+  font-family: 'Poppins', sans-serif;
+}
+
+.mat-sidenav
+{
+  width:337px;
+}
+
 .header-icon
 {
   align-content: center;
-  margin-top: 16px;
-  padding-left: 18px;
-  height: 70%;
-  width: 70%;
+  margin-top: 17px;
+  padding-left: 16px;
+  height: 78px;
+  width: 180px;
 }
 
