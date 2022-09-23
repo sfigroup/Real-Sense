@@ -1,11 +1,14 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav class="side-nav" mode="side" opened>
     <div>
-
-       <mat-icon  class="header-icon" svgIcon="realsense_icon"></mat-icon>
-
+      <mat-list class="header-list">
+        <!-- class="header-list-item" -->
+        <mat-list-item >
+          <mat-icon  class="header-icon" svgIcon="realsense_icon"></mat-icon>
+        </mat-list-item>
+      </mat-list>
       <mat-divider></mat-divider>
-      <mat-list role="list" *ngFor="let menu of appitemsTravel">
+      <mat-list class="side-list" role="list" *ngFor="let menu of appitemsTravel">
         <mat-list-item routerLink="{{menu.link}}" (click)="menuChange(menu)" role="listitem">
           <mat-icon class="sidenav-icon" svgIcon="{{menu.icon}}"></mat-icon>
           <span fxFlex="90">{{menu.label}}</span>

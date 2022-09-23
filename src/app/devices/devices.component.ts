@@ -13,8 +13,8 @@ export class DevicesComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator)
   Paginator!:MatPaginator;
   length = 10;
-  pageSize = 1;
-  pageSizeOptions: number[] = [1,5, 10, 25, 100];
+  pageSize = 10;
+  pageSizeOptions: number[] = [10, 25, 100];
     // MatPaginator Output
   pageEvent!: PageEvent;
   DeviceData! :Device[];

@@ -1,6 +1,6 @@
 import { AfterContentChecked, AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -17,14 +17,19 @@ export class DashboardDisplayComponent implements OnInit,AfterViewInit,AfterCont
   iFrameLoaded : boolean = false;
   constructor(public sanitizer: DomSanitizer,
     private activatedroute:ActivatedRoute,
-    private cd :ChangeDetectorRef) { }
+    private cd :ChangeDetectorRef,
+    private router: Router) { }
 
 
   ngOnInit() {
 
-        this.DashboardId = history.state.dashboardid;
-
-    this.DisplayDashboardIframe();
+    if(history.state.dashboardid !== undefined)
+    {
+      this.DashboardId = history.state.dashboardid;
+      this.DisplayDashboardIframe();
+      return;
+    }
+    this.router.navigate(['dashboards']);
   }
 
   ngAfterContentChecked(): void {
@@ -53,10 +58,14 @@ ngAfterViewInit(): void {
     {
       background: rgba(40,105,104,0.6)  !important;
       color:brown !important;
-    },
-    *{
-      font-family:'Poppins', sans-serif;
-      }
+      height:57px !important;
+    }
+    button.mat-focus-indicator.mat-tooltip-trigger.mat-fab.mat-button-base.mat-primary {
+      background-color: rgba(40,105,104,0)  !important;
+      box-shadow: 0 0 0 !important;
+  }
+
+
   `;
 
 
