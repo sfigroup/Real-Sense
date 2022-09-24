@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { ThingsService } from '../services/thingsboard/things.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit ,AfterViewInit{
+export class LoginComponent implements OnInit ,AfterContentChecked{
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -26,13 +26,18 @@ export class LoginComponent implements OnInit ,AfterViewInit{
   private email! :string;
   private password! :string;
 
+   sleep = async (milliseconds : number) => {
+    await new Promise(resolve => {
+        return setTimeout(resolve, milliseconds)
+    });
+};
+
   constructor(
     private thingsService: ThingsService,
     public sanitizer: DomSanitizer,
     private router: Router,
     private cookieService: CookieService,
     private svgRegistry: IconRegistryService,
-    private cd :ChangeDetectorRef,
     private authService: AuthServiceService
   ) {}
 
@@ -43,27 +48,34 @@ export class LoginComponent implements OnInit ,AfterViewInit{
       this.router.navigate(['']);
       return;
     }
-    this.bringUpIFrame();
+    else if(!this.authService.isLoggedIn())
+    {
+      this.authService.logout();
+      this.bringUpIFrame();
+    }
+
   }
 
-  ngAfterViewInit(): void {
+  ngAfterContentChecked(): void {
     this.checkIframeLoad();
   }
 
-  login(): void {
+
+  async login(): Promise<void> {
     var email = this.form.controls['username'].value;
     var password = this.form.controls['password'].value;
     // do error check here for when they return null values
-    this.authService.login(email,password);
-    this.loginThingsBoardIframe(email,password);
+
     this.authService.login(email, password).subscribe({
-      next: (res) => {
+      next: async (res) => {
         this.email= email;
         this.password=password;
+
+        await this.loginThingsBoardIframe(email,password);
+
         this.loginSucces= true;
         this.thingsService.GetUser();
         this.router.navigate(['']);
-        console.log(res);
       },
       error: (error) => {
         var x = error;
@@ -82,13 +94,11 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     this.loginUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(`${this.baseUrl}`);
   };
 
-  public loginThingsBoardIframe(email: string, password: string): void {
+  public async loginThingsBoardIframe(email: string, password: string): Promise<void>{
 
     var iframe = document.getElementById('tbiframe') as HTMLIFrameElement;
     var iframedocument = iframe.contentDocument;
-    //var iframewindowdocument = iframe.contentWindow?.document;
-    if (iframedocument !== null) {
-      console.log('set from document');
+    if (this.iframeLoaded && iframedocument !== undefined && iframedocument !== null) {
       var userName = iframedocument.getElementById(
         'username-input'
       ) as HTMLInputElement;
@@ -101,19 +111,20 @@ export class LoginComponent implements OnInit ,AfterViewInit{
       passWord.dispatchEvent(new Event('input'));
       var button = iframedocument.querySelectorAll('button[type=submit]')[0] as HTMLButtonElement;
       button.click();
+      await this.sleep(5000);
     }
   }
-
   public checkIframeLoad():void
   {
     var iframe = document.getElementById('tbiframe') as HTMLIFrameElement;
     var iframedocument = iframe.contentDocument;
-    if(iframedocument?.readyState === 'complete')
+    if(iframedocument?.title.includes('Login'))
     {
       this.iframeLoaded = true;
-      this.cd.detectChanges();
-      return
+      return;
     }
     window.setTimeout(this.checkIframeLoad,100);
   }
+
+
 }

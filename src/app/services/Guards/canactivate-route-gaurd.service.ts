@@ -17,6 +17,7 @@ export class CanactivateRouteGaurdService implements CanActivate {
     }
     else
     {
+      this.authService.logout()
       this.router.navigate(['login']);
       return false
 
