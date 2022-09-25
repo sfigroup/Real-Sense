@@ -54,6 +54,11 @@ mat-sidenav
   width:337px;
   background-color: #F8F8F8;
   background-image: url(../../assets/background.png);
+  background-size: length;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
+
 }
 
 .header-icon

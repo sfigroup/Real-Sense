@@ -63,9 +63,11 @@ ngAfterViewInit(): void {
     button.mat-focus-indicator.mat-tooltip-trigger.mat-fab.mat-button-base.mat-primary {
       background-color: rgba(40,105,104,0)  !important;
       box-shadow: 0 0 0 !important;
-  }
+    }
+    div.tb-dashboard-page section.tb-powered-by-footer {
 
-
+      visibility: hidden;
+    }
   `;
 
 

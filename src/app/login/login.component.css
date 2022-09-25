@@ -39,7 +39,7 @@ mat-card-content {
   margin: auto;
   border: 20px solid #EAF0F6;
   border-radius: 50%;
-  border-top: 20px solid #FF7A59;
+  border-top: 20px solid #286968;
   width: 200px;
   height: 200px;
   animation: spinner 4s linear infinite;
