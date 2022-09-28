@@ -1,0 +1,28 @@
+
+> nx run realsense:serve:development --host=0.0.0.0 --serve-path=/app/
+
+Warning: This is a simple server for use in testing or debugging Angular applications
+locally. It hasn't been reviewed for security issues.
+
+Binding this server to an open connection can result in compromising your application or
+computer. Using a different host than the one passed to the "--host" flag might result in
+websocket connection issues. You might need to use "--disable-host-check" if that's the
+case.
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files   | Names         |  Raw Size
+vendor.js             | vendor        |   4.22 MB |
+polyfills.js          | polyfills     | 318.03 kB |
+styles.css, styles.js | styles        | 297.79 kB |
+main.js               | main          | 129.89 kB |
+runtime.js            | runtime       |   6.52 kB |
+
+| Initial Total |   4.95 MB
+
+Build at: 2022-09-28T18:30:24.201Z - Hash: bbf8d8c1b22bb5af - Time: 15878ms
+
+** Angular Live Development Server is listening on 0.0.0.0:4200, open your browser on http://localhost:4200/app **
+
+
+✔ Compiled successfully.

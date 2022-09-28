@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl:"http://iot.robotweb.co.za"
+  baseUrl:"http://iot.realsense.online"
   //baseUrl:"https://things.sfigroup.co.za"
 };
 

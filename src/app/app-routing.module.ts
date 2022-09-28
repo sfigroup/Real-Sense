@@ -22,12 +22,12 @@ const routes: Routes = [
       {
         path: 'dashboards',
         component: DashboardComponent,
-        data: { breadcrumb: 'DashBoards', icon: 'dashboard_icon' }
+        data: { breadcrumb: 'Dashboards', icon: 'dashboard_icon' }
       },
       {
       path:'dashboarddisplay',
       component: DashboardDisplayComponent,
-      data: { breadcrumb: 'DashBoadDisplay', icon: 'dashboard_icon' }
+      data: { breadcrumb: 'Dashboard', icon: 'dashboard_icon' }
       },
       { path: 'devices', component: DevicesComponent, data: { breadcrumb: 'Devices', icon: 'devices_icon' } },
     ],
