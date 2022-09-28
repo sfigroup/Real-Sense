@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit,AfterViewInit{
   {
     this.displayDash =true;
     this.selectedDashId= dashId;
-    this.router.navigate(['dashboarddisplay'],{state:{dashboardid:dashId}});
+    this.router.navigate(['dashboarddisplay'],{state:{dashboardid:dashId,showtoolbar:false}});
   }
 
   listDashboards(): void

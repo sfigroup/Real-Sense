@@ -46,11 +46,19 @@ export class HomeComponent implements OnInit {
   constructor(iconservice:IconRegistryService,
     private cookieService:CookieService,
     private router: Router,
-    private cd: ChangeDetectorRef) {
+    private cd: ChangeDetectorRef,
+    private thingsService: ThingsService) {
 
    }
 
   ngOnInit(): void {
+    this.thingsService.GetHomeDashBoard().subscribe(res =>
+      {
+         if(res !== null)
+         {
+           this.displayHomeDashboard(res.id.id);
+         }
+      });
     this.appitemsTravel = this.menuitems;
     this.menuHeader.push(this.appitemsTravel[0]);
   }
@@ -71,6 +79,13 @@ export class HomeComponent implements OnInit {
     }
 
     console.log('STORAGE:' + localStorage.getItem("jwt_token"));
+  }
+
+  displayHomeDashboard(dashId:string)
+  {
+    //this.displayDash =true;
+    //this.homeDashId= dashId;
+    this.router.navigate(['dashboarddisplay'],{state:{dashboardid:dashId,showtoolbar:true}});
   }
 
   breadCrumbMain() {

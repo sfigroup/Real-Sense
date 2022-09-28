@@ -15,6 +15,7 @@ export class DashboardDisplayComponent implements OnInit,AfterViewInit,AfterCont
   dashboardUrlSafe!: SafeResourceUrl;
   baseUrl = environment.baseUrl;
   iFrameLoaded : boolean = false;
+  ShowDashToolBar: boolean = false;
   constructor(public sanitizer: DomSanitizer,
     private activatedroute:ActivatedRoute,
     private cd :ChangeDetectorRef,
@@ -26,6 +27,7 @@ export class DashboardDisplayComponent implements OnInit,AfterViewInit,AfterCont
     if(history.state.dashboardid !== undefined)
     {
       this.DashboardId = history.state.dashboardid;
+      this.ShowDashToolBar = history.state.showtoolbar;
       this.DisplayDashboardIframe();
       return;
     }
@@ -70,20 +72,29 @@ ngAfterViewInit(): void {
     }
   `;
 
+  const toolbarStyles = `
+  div.tb-dashboard-page .tb-dashboard-container.tb-dashboard-toolbar-opened:not(.is-fullscreen)
+  {
+      margin-top: 0px !important;
+  }
+
+  div.tb-dashboard-page section.tb-dashboard-toolbar
+  {
+    display: none !important;
+  }
+  `;
+
 
    const iframedoc= (document.getElementById('tbiframe') as HTMLIFrameElement).contentDocument;
    if(iframedoc !== null)
         {
           const style = iframedoc?.createElement('style');
           style?.appendChild(iframedoc.createTextNode(customStyles));
-          // style.type="text/css";
+          if(this.ShowDashToolBar)
+          {
+            style?.appendChild(iframedoc.createTextNode(toolbarStyles));
+          }
           iframedoc.head.appendChild(style);
-          // iframedoc.head.title
-          // iframedoc.body.style.backgroundColor = "#ff0000";
-          // var q = iframedoc.querySelector(".mat-toolbar") as HTMLElement;
-          // //q?.style.background='green';
-          // console.log('Q IS : ' + q);
-          // iframedoc.head.appendChild(style);
           var title =  iframedoc.title.includes('Thingsboard');
           console.log('The title contains: ' + title );
         }
