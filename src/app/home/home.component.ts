@@ -1,10 +1,10 @@
 import { CookieService } from './../services/cookie/cookie.service';
 import { IconRegistryService } from './../services/iconregistry/icon-registry.service';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ThingsService } from '../services/thingsboard/things.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit{
   menuHeader: any= [];
   appitemsTravel!:any;
   UserName :string = 'Unknown';
@@ -51,7 +51,9 @@ export class HomeComponent implements OnInit {
 
    }
 
+
   ngOnInit(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.thingsService.GetHomeDashBoard().subscribe(res =>
       {
          if(res !== null)
